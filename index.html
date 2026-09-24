@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=1440"><title>Garber Buick — About Us</title><link rel="stylesheet" href="assets/site.css"></head><body><svg width="0" height="0" style="position:absolute"><symbol id="s0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M8 7h9v9"></path></symbol><symbol id="s1" viewBox="0 0 24 24" fill="#F5B400"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"></path></symbol><symbol id="s3" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></symbol></svg><header class="site-header"><div class="bar"><a href="#about" style="display:flex;align-items:center;"><img src="assets/garber-buick-logo.webp" alt="Garber Buick" style="height: 44px; width: auto;"></a><nav class="site-nav"><a href="#about" data-page="about">About Us</a><a href="#history" data-page="history">Our History</a><a href="#community" data-page="community">Community</a><a href="#values" data-page="values">Mission, Vision &amp; Values</a></nav><span style="width: 44px;"></span></div></header><main><div class="page" id="about" data-title="About Us" data-src="assets/about.html"></div><div class="page" id="history" data-title="Our History" data-src="assets/history.html"></div><div class="page" id="community" data-title="Community" data-src="assets/community.html"></div><div class="page" id="values" data-title="Mission, Vision & Values" data-src="assets/values.html"></div></main><div id="video-modal"><div class="player" id="player"></div><button id="video-close" aria-label="Close" style="position: absolute; top: 24px; right: 28px; width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.35); background: rgba(255,255,255,0.12); color: #fff; font-size: 22px; cursor: pointer;">&times;</button><a id="video-yt" href="#" target="_blank" rel="noopener" style="position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.8); font-size: 13px; text-decoration: none;">Open on YouTube ↗</a></div><script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script><script src="assets/site.js"></script><script>
+(function(){
+var NS = window.GarberAutomotiveDesignSystem_f79ede || {};
+function mountAll(){ document.querySelectorAll('.ds-mount:not([data-mounted])').forEach(function(el){ el.setAttribute('data-mounted','1');
+var comp = NS[el.getAttribute('data-comp')]; if(!comp) return;
+var props = {}; try { props = JSON.parse(el.getAttribute('data-props')||'{}'); } catch(e){}
+try { ReactDOM.createRoot(el).render(React.createElement(comp, props)); } catch(e) { console.error(e); }
+}); }
+function route(){
+var id = (location.hash||'#about').slice(1); if(!document.getElementById(id)) id='about';
+document.querySelectorAll('.page').forEach(function(p){ p.classList.toggle('active', p.id===id); });
+document.querySelectorAll('.site-nav a').forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-page')===id); });
+document.title = 'Garber Buick — ' + document.getElementById(id).getAttribute('data-title'); window.scrollTo(0,0);
+}
+Promise.all(Array.prototype.map.call(document.querySelectorAll('.page[data-src]'), function(p){ return fetch(p.getAttribute('data-src')).then(function(r){ return r.text(); }).then(function(h){ p.innerHTML=h; }); })).then(function(){ mountAll(); route(); });
+window.addEventListener('hashchange', route);
+var modal=document.getElementById('video-modal'), player=document.getElementById('player'), yt=document.getElementById('video-yt');
+function openVideo(id, src){
+player.innerHTML='';
+if(src){ var v=document.createElement('video'); v.src=src; v.controls=true; v.autoplay=true; v.playsInline=true; v.setAttribute('playsinline',''); player.appendChild(v); v.play().catch(function(){}); }
+else { var f=document.createElement('iframe'); f.src='https://www.youtube.com/embed/'+id+'?autoplay=1&playsinline=1&rel=0'; f.allow='autoplay; encrypted-media; picture-in-picture'; f.allowFullscreen=true; player.appendChild(f); }
+yt.href='https://www.youtube.com/shorts/'+id; modal.classList.add('open'); document.body.style.overflow='hidden';
+}
+function closeVideo(){ modal.classList.remove('open'); player.innerHTML=''; document.body.style.overflow=''; }
+document.addEventListener('click', function(e){ var a=e.target.closest('.js-video'); if(!a) return; e.preventDefault(); openVideo(a.getAttribute('data-video'), a.getAttribute('data-src')); });
+document.getElementById('video-close').addEventListener('click', closeVideo);
+modal.addEventListener('click', function(e){ if(e.target===modal) closeVideo(); });
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeVideo(); });
+})();
+</script></body></html>
